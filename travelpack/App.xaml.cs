@@ -29,6 +29,7 @@ namespace travelpack
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+
         }
 
         protected override void OnStart()

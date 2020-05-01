@@ -20,8 +20,14 @@
   <ItemGroup>
     <Folder Include="Views\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Resources\" />
+    <Folder Include="Fonts\" />
     <Folder Include="Styling\" />
+    <Folder Include="Extension\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Constants\" />
+    <Folder Include="Services\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Common\OpenSans-SemiboldItalic.ttf" />
@@ -37,20 +43,23 @@
     <None Remove="Common\FontAwesomePro-Solid.otf" />
     <None Remove="Common\FontAwesomePro-Light.otf" />
     <None Remove="Common\FontAwesomePro-Regular.otf" />
+    <None Remove="Resources\Xamarin.png" />
+    <None Remove="Resources\xam.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\OpenSans-SemiboldItalic.ttf" />
-    <EmbeddedResource Include="Resources\OpenSans-Regular.ttf" />
-    <EmbeddedResource Include="Resources\OpenSans-Semibold.ttf" />
-    <EmbeddedResource Include="Resources\OpenSans-Italic.ttf" />
-    <EmbeddedResource Include="Resources\OpenSans-LightItalic.ttf" />
-    <EmbeddedResource Include="Resources\OpenSans-Light.ttf" />
-    <EmbeddedResource Include="Resources\OpenSans-BoldItalic.ttf" />
-    <EmbeddedResource Include="Resources\OpenSans-Bold.ttf" />
-    <EmbeddedResource Include="Resources\OpenSans-ExtraBoldItalic.ttf" />
-    <EmbeddedResource Include="Resources\OpenSans-ExtraBold.ttf" />
-    <EmbeddedResource Include="Resources\FontAwesomePro-Solid.otf" />
-    <EmbeddedResource Include="Resources\FontAwesomePro-Light.otf" />
-    <EmbeddedResource Include="Resources\FontAwesomePro-Regular.otf" />
+    <EmbeddedResource Include="Fonts\OpenSans-SemiboldItalic.ttf" />
+    <EmbeddedResource Include="Fonts\OpenSans-Regular.ttf" />
+    <EmbeddedResource Include="Fonts\OpenSans-Semibold.ttf" />
+    <EmbeddedResource Include="Fonts\OpenSans-Italic.ttf" />
+    <EmbeddedResource Include="Fonts\OpenSans-LightItalic.ttf" />
+    <EmbeddedResource Include="Fonts\OpenSans-Light.ttf" />
+    <EmbeddedResource Include="Fonts\OpenSans-BoldItalic.ttf" />
+    <EmbeddedResource Include="Fonts\OpenSans-Bold.ttf" />
+    <EmbeddedResource Include="Fonts\OpenSans-ExtraBoldItalic.ttf" />
+    <EmbeddedResource Include="Fonts\OpenSans-ExtraBold.ttf" />
+    <EmbeddedResource Include="Fonts\FontAwesomePro-Solid.otf" />
+    <EmbeddedResource Include="Fonts\FontAwesomePro-Light.otf" />
+    <EmbeddedResource Include="Fonts\FontAwesomePro-Regular.otf" />
+    <EmbeddedResource Include="Resources\xam.png" />
   </ItemGroup>
 </Project>

@@ -6,8 +6,14 @@ namespace travelpack.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+
         public MainPageViewModel(INavigationService navigationService, IPageDialogService dialogService) : base(navigationService, dialogService)
         {
+        }
+
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
         }
     }
 }
