@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Prism;
 using Prism.Ioc;
+using travelpack.Interfaces;
+using travelpack.Services;
 using travelpack.ViewModels;
+using travelpack.Views;
 using Xamarin.Forms;
 
 namespace travelpack
@@ -21,15 +25,18 @@ namespace travelpack
         protected override async void OnInitialized()
         {
             InitializeComponent();
+            Device.SetFlags(new string[] { "Expander_Experimental" });
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("NavigationPage/CurrencyRatePage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<CurrencyRatePage, CurrencyRatePageViewModel>();
 
+
+            containerRegistry.RegisterSingleton<ICurrencyService, CurrencyService>();
         }
 
         protected override void OnStart()
