@@ -94,6 +94,7 @@ namespace travelpack.ViewModels
             var convertedResult = await this.CurrencyService.GetCurrency(FromSelectedPicker, ToSelectedPicker, Amount);
             this.ConvertedValue = convertedResult.Response.RoundedValue;
             this.ConvertedTimestamp = "Updated: " + convertedResult.Response.StringDateTime;
+            OnPropertyChanged(nameof(IsValueVisible));
         }
 
         public double ConvertedValue
