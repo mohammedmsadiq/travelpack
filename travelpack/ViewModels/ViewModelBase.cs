@@ -153,17 +153,5 @@ namespace travelpack.ViewModels
             await DialogService.DisplayAlertAsync("Error", ex.Message, "OK");
         }
         #endregion ExecuteAsyncTask
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
     }
 }

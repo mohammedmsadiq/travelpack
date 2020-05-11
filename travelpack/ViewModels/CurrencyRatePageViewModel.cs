@@ -1,25 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
-using travelpack.Constants;
-using travelpack.Helpers;
 using travelpack.Interfaces;
+using travelpack.Models;
 
 namespace travelpack.ViewModels
 {
     public class CurrencyRatePageViewModel : ViewModelBase
     {
         protected readonly ICurrencyService CurrencyService;
+        private string fromSelectedPicker;
+        private string toSelectedPicker;
+        private double amount;
 
-        private List<string> data;
-        private string selectedCode;
-        private string pickerTitle;
+        private ObservableCollection<ConvertCurrencyModel> convertedData;
+        public ObservableCollection<ConvertCurrencyModel> ConvertedData
+        {
+            get { return convertedData; }
+            set
+            {
+                if (convertedData != value)
+                {
+                    convertedData = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-        public List<string> Data
+        public ICommand SwapCommand { get; }
+        public ICommand ConvertCommand { get; set; }
+
+        private ObservableCollection<string> data;
+        private double convertedAmount;
+        private double convertedValue;
+        private string convertedFrom;
+        private string convertedTo;
+        private string convertedTimestamp;
+        private string convertedDate;
+
+        public ObservableCollection<string> Data
         {
             get { return data; }
             set
@@ -35,43 +57,142 @@ namespace travelpack.ViewModels
         public CurrencyRatePageViewModel(INavigationService navigationService, IPageDialogService dialogService, ICurrencyService currencyService) : base(navigationService, dialogService)
         {
             this.CurrencyService = currencyService;
-
-
             this.LoadPicker();
-            this.ExecuteAsyncTask(async () =>
+
+            this.SwapCommand = new DelegateCommand(async () =>
             {
-                // var r = await this.CurrencyService.GetLatest("GBP");
-            });
-        }
+                await this.SwapCurrencyAction();
 
-        public string SelectedCode
-        {
-            get { return selectedCode; }
-            set
+            })
+                .ObservesCanExecute(() => this.SwapCanExcute)
+                 .ObservesProperty(() => this.Amount);
+            this.ConvertCommand = new DelegateCommand(async () =>
             {
-                this.SetProperty(ref this.selectedCode, value, this.SelectedCodeChanged);
-            }
-        }
+                await this.ConvertAction();
+            })
+                .ObservesCanExecute(() => this.CanExcute)
+                .ObservesProperty(() => this.Amount)
+                .ObservesProperty(() => this.ToSelectedPicker)
+                .ObservesProperty(() => this.FromSelectedPicker);
+        }        
 
-        private async void SelectedCodeChanged()
+        private async Task SwapCurrencyAction()
         {
-            Settings.CurrencyCode = selectedCode;
-            //var r = await this.CurrencyService.GetLatest(selectedCode);
+            var temp = FromSelectedPicker;
+            this.FromSelectedPicker = ToSelectedPicker;
+            this.ToSelectedPicker = temp;
+            this.ConvertAction();
         }
 
-        public string PickerTitle
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
+
+        private async Task ConvertAction()
+        {
+            var convertedResult = await this.CurrencyService.GetCurrency(FromSelectedPicker, ToSelectedPicker, Amount);
+            this.ConvertedValue = convertedResult.Response.RoundedValue;
+            this.ConvertedTimestamp = "Updated: " + convertedResult.Response.StringDateTime;
+        }
+
+        public double ConvertedValue
+        {
+            get => convertedValue;
+            set => SetProperty(ref convertedValue, value);
+        }
+
+        public string From
+        {
+            get => convertedFrom;
+            set => SetProperty(ref convertedFrom, value);
+        }
+
+        public bool IsValueVisible
         {
             get
             {
-                return pickerTitle = CurrencyConstants.PickerTitle;
+                if (ConvertedValue == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        public string ConvertedTo
+        {
+            get => convertedTo;
+            set => SetProperty(ref convertedTo, value);
+        }
+
+        public double ConvertedAmount
+        {
+            get => convertedAmount;
+            set => SetProperty(ref convertedAmount, value);
+        }
+
+        public string ConvertedTimestamp
+        {
+            get { return convertedTimestamp; }
+            set
+            {
+                this.SetProperty(ref this.convertedTimestamp, value);
+                OnPropertyChanged();
             }
         }
 
 
 
+        public string ConvertedDate
+        {
+            get => convertedDate;
+            set => SetProperty(ref convertedDate, value);
+        }
+
+        public string FromSelectedPicker
+        {
+            get => fromSelectedPicker;
+            set => SetProperty(ref fromSelectedPicker, value);
+        }
+
+        public string ToSelectedPicker
+        {
+            get => toSelectedPicker;
+            set => SetProperty(ref toSelectedPicker, value);
+        }
+
+        public double Amount
+        {
+            get => amount;
+            set => SetProperty(ref amount, value);
+        }
+
+
+        public bool SwapCanExcute
+        {
+            get
+            {
+                bool result = Amount > 0;
+                return result;
+            }
+        }
+
+        public bool CanExcute
+        {
+            get
+            {
+                bool result = !string.IsNullOrEmpty(ToSelectedPicker) && !string.IsNullOrEmpty(FromSelectedPicker) && Amount > 0;
+                return result;
+            }
+        }
+
         private async void LoadPicker()
         {
-            Data = new List<string>();
+            Data = new ObservableCollection<string>();
             Data.Add("USD");
             Data.Add("EUR");
             Data.Add("GBP");

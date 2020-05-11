@@ -18,22 +18,22 @@ namespace travelpack.Services
 {
     public class CurrencyService : ICurrencyService
     {
-        public LatestCurrencyModel Items { get; set; }
+        public ConvertCurrencyModel Items { get; set; }
 
-        public async Task<LatestCurrencyModel> GetLatest(string currencyType)
+        public async Task<ConvertCurrencyModel> GetCurrency(string Base, string To, double Amount)
         {
             try
             {
                 using (var client = new HttpClient())
                 {
-                    var url = CurrencyConstants.LatestURL();
-                    var param = string.Format(url + "?api_key=" + CurrencyConstants.ApiKey + "&base=" + currencyType);
+                    var url = CurrencyConstants.ConvertURL();
+                    var param = string.Format(url + "?api_key=" + CurrencyConstants.ApiKey + "&base=" + Base + "&amount=" + Amount + "&to=" + To);
                     var response = await client.GetAsync(param.ToString());
-                    
+
                     if (response.IsSuccessStatusCode)
                     {
                         var result = await response.Content.ReadAsStringAsync();
-                        Items = JsonConvert.DeserializeObject<LatestCurrencyModel>(result);
+                        Items = JsonConvert.DeserializeObject<ConvertCurrencyModel>(result);
                     }
                     else
                     {

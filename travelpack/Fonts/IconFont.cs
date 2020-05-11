@@ -1,5 +1,4 @@
-﻿using System;
-namespace travelpack.Common
+﻿namespace travelpack.Fonts
 {
 	static class IconFont
 	{

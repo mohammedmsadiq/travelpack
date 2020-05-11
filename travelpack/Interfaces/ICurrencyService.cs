@@ -7,7 +7,7 @@ namespace travelpack.Interfaces
 {
     public interface ICurrencyService 
     {
-        Task<LatestCurrencyModel> GetLatest(string currencyType);
+        Task<ConvertCurrencyModel> GetCurrency(string To, string Base, double Amount);
     }
 }
 

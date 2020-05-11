@@ -7,12 +7,98 @@
     BackgroundColor="{DynamicResource background}"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="clr-namespace:travelpack.Controls"
     mc:Ignorable="d"
+    xmlns:font="clr-namespace:travelpack.Fonts"
     x:Class="travelpack.Views.CurrencyRatePage">
     <ContentPage.Content>
-        <controls:SelectBaseCodeControl
-            VerticalOptions="Start"
-            HorizontalOptions="FillAndExpand" />
+        <Grid
+            Margin="10"
+            ColumnSpacing="0"
+            RowSpacing="10"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="5*" />
+                <ColumnDefinition
+                    Width="4*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="60" />
+                <RowDefinition
+                    Height="60" />
+                <RowDefinition
+                    Height="60" />
+                <RowDefinition
+                    Height="40" />
+            </Grid.RowDefinitions>
+            <Button
+                Rotation="90"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                FontFamily="FontAwesomeLight"
+                TextColor="Black"
+                HorizontalOptions="Start"
+                FontSize="22"
+                Command="{Binding SwapCommand}"
+                Text="{x:Static font:IconFont.Repeat}" />
+            <Picker
+                Grid.Row="0"
+                Grid.Column="1"
+                Visual="Material"
+                Title="From Currency"
+                SelectedItem="{Binding FromSelectedPicker}"
+                ItemsSource="{Binding Data}"
+                VerticalOptions="Center"
+                HorizontalOptions="FillAndExpand" />
+            <Entry
+                Visual="Material"
+                Margin="10,0,0,0"
+                Grid.Column="2"
+                Grid.Row="0"
+                Text="{Binding Amount, Mode=TwoWay}"
+                Keyboard="Numeric"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="CenterAndExpand"
+                Placeholder="Amount" />
+            <Picker
+                Grid.Row="1"
+                Grid.Column="1"
+                Visual="Material"
+                Title="To Currency"
+                SelectedItem="{Binding ToSelectedPicker}"
+                ItemsSource="{Binding Data}"
+                VerticalOptions="Center"
+                HorizontalOptions="FillAndExpand" />
+            <Label
+                Visual="Material"
+                Margin="10,0,0,0"
+                Grid.Column="2"
+                Grid.Row="1"
+                IsVisible="{Binding IsValueVisible}"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                Text="{Binding ConvertedValue}" />
+            <Button
+                Text="Convert"
+                Margin="30,5"
+                Command="{Binding ConvertCommand}"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Visual="Material"
+                Grid.Row="2" />
+            <Label
+                FontSize="Small"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Grid.Row="3"
+                TextColor="LightGray"
+                HorizontalOptions="Center"
+                Text="{Binding ConvertedTimestamp}" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
