@@ -2,11 +2,14 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Prism;
 using Prism.AppModel;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
+using travelpack.Views;
 using Xamarin.Forms;
 
 namespace travelpack.ViewModels
@@ -14,10 +17,23 @@ namespace travelpack.ViewModels
     public class ViewModelBase : BindableBase, INavigationAware, IDestructible, IPageLifecycleAware, IApplicationLifecycleAware, IConfirmNavigationAsync,
        IConfirmNavigation, IActiveAware, INotifyPropertyChanged
     {
+        public ICommand CurrencyPageBtnCommand { get; }
+
         public ViewModelBase(INavigationService navigationService, IPageDialogService dialogService)
         {
             this.NavigationService = navigationService;
             this.DialogService = dialogService;
+
+            this.CurrencyPageBtnCommand = new DelegateCommand(async () => { await this.CurrencyPageBtnAction(); });
+        }
+
+        private async Task CurrencyPageBtnAction()
+        {
+            var name = this.GetType().Name;
+            if (name != "CurrencyRatePageViewModel")
+            {
+                await this.NavigationService.NavigateAsync("CurrencyRatePage");
+            }
         }
 
         protected INavigationService NavigationService { get; private set; }

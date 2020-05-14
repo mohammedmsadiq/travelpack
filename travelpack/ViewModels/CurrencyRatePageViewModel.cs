@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Commands;
@@ -6,6 +8,7 @@ using Prism.Navigation;
 using Prism.Services;
 using travelpack.Interfaces;
 using travelpack.Models;
+using Xamarin.Forms;
 
 namespace travelpack.ViewModels
 {
@@ -59,6 +62,8 @@ namespace travelpack.ViewModels
             this.CurrencyService = currencyService;
             this.LoadPicker();
 
+            this.Title = "Currency Converter";
+
             this.SwapCommand = new DelegateCommand(async () =>
             {
                 await this.SwapCurrencyAction();
@@ -74,7 +79,7 @@ namespace travelpack.ViewModels
                 .ObservesProperty(() => this.Amount)
                 .ObservesProperty(() => this.ToSelectedPicker)
                 .ObservesProperty(() => this.FromSelectedPicker);
-        }        
+        }
 
         private async Task SwapCurrencyAction()
         {
@@ -96,6 +101,7 @@ namespace travelpack.ViewModels
             this.ConvertedTimestamp = "Updated: " + convertedResult.Response.StringDateTime;
             OnPropertyChanged(nameof(IsValueVisible));
         }
+
 
         public double ConvertedValue
         {
@@ -177,7 +183,7 @@ namespace travelpack.ViewModels
         {
             get
             {
-                bool result = Amount > 0;
+                bool result = !string.IsNullOrEmpty(ToSelectedPicker) && !string.IsNullOrEmpty(FromSelectedPicker) && Amount > 0;
                 return result;
             }
         }

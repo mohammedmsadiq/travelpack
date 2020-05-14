@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace travelpack.Views
 {
-    public partial class CurrencyRatePage : ViewBase
+    public partial class HomePage : ViewBase
     {
-        public CurrencyRatePage()
+        public HomePage()
         {
             InitializeComponent();
         }

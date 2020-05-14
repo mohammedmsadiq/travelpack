@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource background}"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:font="clr-namespace:travelpack.Fonts"
+    x:Class="travelpack.Views.ViewBase">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            x:Name="CurrencyBtn"
+            Order="Default"
+            Priority="1"
+            Command="{Binding CurrencyPageBtnCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource
+                    FontFamily="FontAwesomeLight"
+                    Glyph="{x:Static font:IconFont.MoneyBillWave}"
+                    Color="Black" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+</ContentPage>

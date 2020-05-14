@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage
+<views:ViewBase
+    xmlns:views="clr-namespace:travelpack.Views"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
@@ -8,20 +9,28 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Title="{Binding Title}"
     xmlns:font="clr-namespace:travelpack.Fonts"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Class="travelpack.Views.CurrencyRatePage">
-    <ContentPage.Content>
+    <yummy:PancakeView
+        Margin="10,0"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        HeightRequest="290"
+        CornerRadius="20,0,0,20"
+        BackgroundGradientStartColor="#FAF9F8"
+        BackgroundGradientEndColor="#FAF9F8">
         <Grid
-            Margin="10"
             ColumnSpacing="0"
             RowSpacing="10"
-            VerticalOptions="FillAndExpand"
-            HorizontalOptions="FillAndExpand">
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
                     Width="1*" />
                 <ColumnDefinition
-                    Width="5*" />
+                    Width="4*" />
                 <ColumnDefinition
                     Width="4*" />
             </Grid.ColumnDefinitions>
@@ -31,63 +40,86 @@
                 <RowDefinition
                     Height="60" />
                 <RowDefinition
-                    Height="60" />
+                    Height="70" />
+                <RowDefinition
+                    Height="40" />
                 <RowDefinition
                     Height="40" />
             </Grid.RowDefinitions>
             <Button
+                BackgroundColor="Transparent"
                 Rotation="90"
                 Grid.Row="0"
                 Grid.RowSpan="2"
                 Grid.Column="0"
                 FontFamily="FontAwesomeLight"
                 TextColor="Black"
-                HorizontalOptions="Start"
+                HorizontalOptions="Center"
                 FontSize="22"
                 Command="{Binding SwapCommand}"
                 Text="{x:Static font:IconFont.Repeat}" />
             <Picker
+                BackgroundColor="Transparent"
                 Grid.Row="0"
                 Grid.Column="1"
                 Visual="Material"
                 Title="From Currency"
+                TextColor="Black"
                 SelectedItem="{Binding FromSelectedPicker}"
                 ItemsSource="{Binding Data}"
                 VerticalOptions="Center"
                 HorizontalOptions="FillAndExpand" />
             <Entry
+                BackgroundColor="Transparent"
                 Visual="Material"
-                Margin="10,0,0,0"
                 Grid.Column="2"
                 Grid.Row="0"
+                Margin="10,0,40,0"
+                TextColor="Black"
                 Text="{Binding Amount, Mode=TwoWay}"
                 Keyboard="Numeric"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="CenterAndExpand"
                 Placeholder="Amount" />
             <Picker
+                BackgroundColor="Transparent"
                 Grid.Row="1"
                 Grid.Column="1"
                 Visual="Material"
                 Title="To Currency"
+                TextColor="Black"
                 SelectedItem="{Binding ToSelectedPicker}"
                 ItemsSource="{Binding Data}"
                 VerticalOptions="Center"
                 HorizontalOptions="FillAndExpand" />
             <Label
                 Visual="Material"
-                Margin="10,0,0,0"
+                Margin="10,0,40,0"
                 Grid.Column="2"
                 Grid.Row="1"
+                TextColor="Black"
                 IsVisible="{Binding IsValueVisible}"
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="CenterAndExpand"
                 Text="{Binding ConvertedValue}" />
+            <BoxView
+                Margin="10,0,40,0"
+                BackgroundColor="Black"
+                HeightRequest="1"
+                VerticalOptions="EndAndExpand"
+                Opacity="0.5"
+                HorizontalOptions="FillAndExpand"
+                Grid.Column="2"
+                Grid.Row="1" />
             <Button
                 Text="Convert"
-                Margin="30,5"
+                Margin="30,10,30,5"
+                HeightRequest="40"
+                CornerRadius="20"
+                VerticalOptions="Center"
                 Command="{Binding ConvertCommand}"
                 Grid.Column="0"
+                TextColor="White"
                 Grid.ColumnSpan="3"
                 Visual="Material"
                 Grid.Row="2" />
@@ -98,7 +130,16 @@
                 Grid.Row="3"
                 TextColor="LightGray"
                 HorizontalOptions="Center"
+                VerticalOptions="Start"
                 Text="{Binding ConvertedTimestamp}" />
+            <Label
+                x:Name="StopWatchLabel"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                BackgroundColor="Blue"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Grid.Row="4" />
         </Grid>
-    </ContentPage.Content>
-</ContentPage>
+    </yummy:PancakeView>
+</views:ViewBase>

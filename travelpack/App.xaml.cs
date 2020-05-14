@@ -27,14 +27,15 @@ namespace travelpack
             InitializeComponent();
             Device.SetFlags(new string[] { "Expander_Experimental" });
 
-            await NavigationService.NavigateAsync("NavigationPage/CurrencyRatePage");
+            await NavigationService.NavigateAsync("NavigationPage/HomePage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<ViewBase, ViewModelBase>();
             containerRegistry.RegisterForNavigation<CurrencyRatePage, CurrencyRatePageViewModel>();
-
+            containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
 
             containerRegistry.RegisterSingleton<ICurrencyService, CurrencyService>();
         }
